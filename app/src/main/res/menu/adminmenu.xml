@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_overview"
+        android:title="Overview"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/nav_tenants"
+        android:title="Tenants"
+        android:icon="@drawable/ic_people"/>
+
+    <item
+        android:id="@+id/nav_rooms"
+        android:title="Rooms"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/nav_bills"
+        android:title="Bills"
+        android:icon="@drawable/ic_bills"/>
+
+    <item
+        android:id="@+id/nav_messages"
+        android:title="Messages"
+        android:icon="@drawable/ic_message"/>
+
+    <item
+        android:id="@+id/nav_reports"
+        android:title="Reports"
+        android:icon="@drawable/ic_reports"/>
+
+
+</menu>

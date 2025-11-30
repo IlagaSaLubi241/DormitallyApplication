@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Dormitally</string>
+    <string-array name="Gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>LGBTQ+</item>
+    </string-array>
+    <string-array name="CivilStatus">
+        <item>Civil Status</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Widowed</item>
+    </string-array>
+    <string-array name="RoomType">
+        <item>Room Type</item>
+        <item>Aircon</item>
+        <item>Non-Aircon</item>
+    </string-array>
+    <string-array name="RoomStatus">
+        <item>Room Status</item>
+        <item>Available</item>"
+        <item>Occupied</item>
+        <item>Maintenance</item>
+    </string-array>
+    <string-array name="Capacity">
+        <item>Capacity</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+</resources>

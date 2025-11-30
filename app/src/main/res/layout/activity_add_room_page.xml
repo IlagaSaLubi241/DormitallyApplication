@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".AddRoomPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create Room"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Image Upload Section -->
+            <FrameLayout
+                android:id="@+id/frameImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E8E8E8"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Tap to upload image"
+                    android:textColor="#777"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imgPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+
+            <!-- Room Number -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="Room Number"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/etRoomNumber"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:background="@drawable/edittxt_bg_rf"
+                android:hint="R-123"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <!-- Room Type -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Room Type"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/roomTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/RoomType"
+                android:spinnerMode="dropdown" />
+
+            <!-- Room Status -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Room Status"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/roomStatusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/RoomStatus"
+                android:spinnerMode="dropdown" />
+
+            <!-- Room Price -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Room Price (₱)"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/etRoomPrice"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/edittxt_bg_rf"
+                android:hint="5,000"
+                android:inputType="numberDecimal"
+                android:padding="10dp" />
+
+            <!-- Capacity -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Capacity"
+                android:textColor="#FFFFFF" />
+
+            <Spinner
+                android:id="@+id/roomCapacitySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:entries="@array/Capacity"
+                android:spinnerMode="dropdown" />
+
+            <!-- Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="Description"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/edittxt_bg_rf"
+                android:gravity="top"
+                android:hint="Own Cr,Double Deck, and has a Tables"
+                android:inputType="textMultiLine"
+                android:padding="10dp" />
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_unselected"
+                    android:backgroundTint="@color/white"
+                    android:text="Save"
+                    android:textColor="@color/black" />
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_selected"
+                    android:backgroundTint="#0000FF"
+                    android:text="Cancel"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
