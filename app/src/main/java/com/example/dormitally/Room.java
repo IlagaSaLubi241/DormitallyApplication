@@ -8,9 +8,23 @@ public class Room {
     private double roomPrice;
     private int roomCapacity;
     private String roomDescription;
-    private final byte[] roomImage;
+    private byte[] roomImage; // store image as bytes
 
-    public Room(int roomId, String roomNum, String roomType, String roomStatus, double roomPrice, int roomCapacity, String roomDescription, final byte[] roomImage) {
+    // Constructor without roomId (for inserting new rooms)
+    public Room(String roomNum, String roomType, String roomStatus,
+                double roomPrice, int roomCapacity, String roomDescription, byte[] roomImage) {
+        this.roomNum = roomNum;
+        this.roomType = roomType;
+        this.roomStatus = roomStatus;
+        this.roomPrice = roomPrice;
+        this.roomCapacity = roomCapacity;
+        this.roomDescription = roomDescription;
+        this.roomImage = roomImage;
+    }
+
+    // Constructor with roomId (for fetching from DB)
+    public Room(int roomId, String roomNum, String roomType, String roomStatus,
+                double roomPrice, int roomCapacity, String roomDescription, byte[] roomImage) {
         this.roomId = roomId;
         this.roomNum = roomNum;
         this.roomType = roomType;
@@ -21,73 +35,28 @@ public class Room {
         this.roomImage = roomImage;
     }
 
-    public Room(String roomNum, String roomType, String roomStatus, double roomPrice, int roomCapacity, String roomDescription, final byte[] roomImage) {
-        this.roomNum = roomNum;
-        this.roomType = roomType;
-        this.roomStatus = roomStatus;
-        this.roomPrice = roomPrice;
-        this.roomCapacity = roomCapacity;
-        this.roomDescription = roomDescription;
-        this.roomImage = roomImage;
-    }
+    // Getters and setters
+    public int getRoomId() { return roomId; }
+    public void setRoomId(int roomId) { this.roomId = roomId; }
 
-    public byte[] getRoomImage() {
-        return roomImage;
-    }
+    public String getRoomNum() { return roomNum; }
+    public void setRoomNum(String roomNum) { this.roomNum = roomNum; }
 
-    public int getRoomId() {
-        return roomId;
-    }
+    public String getRoomType() { return roomType; }
+    public void setRoomType(String roomType) { this.roomType = roomType; }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
+    public String getRoomStatus() { return roomStatus; }
+    public void setRoomStatus(String roomStatus) { this.roomStatus = roomStatus; }
 
-    public String getRoomNum() {
-        return roomNum;
-    }
+    public double getRoomPrice() { return roomPrice; }
+    public void setRoomPrice(double roomPrice) { this.roomPrice = roomPrice; }
 
-    public void setRoomNum(String roomNum) {
-        this.roomNum = roomNum;
-    }
+    public int getRoomCapacity() { return roomCapacity; }
+    public void setRoomCapacity(int roomCapacity) { this.roomCapacity = roomCapacity; }
 
-    public String getRoomType() {
-        return roomType;
-    }
+    public String getRoomDescription() { return roomDescription; }
+    public void setRoomDescription(String roomDescription) { this.roomDescription = roomDescription; }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
-
-    public String getRoomStatus() {
-        return roomStatus;
-    }
-
-    public void setRoomStatus(String roomStatus) {
-        this.roomStatus = roomStatus;
-    }
-
-    public double getRoomPrice() {
-        return roomPrice;
-    }
-
-    public void setRoomPrice(double roomPrice) {
-        this.roomPrice = roomPrice;
-    }
-
-    public int getRoomCapacity() {
-        return roomCapacity;
-    }
-
-    public void setRoomCapacity(int roomCapacity) {
-        this.roomCapacity = roomCapacity;
-    }
-
-    public String getRoomDescription() {
-        return roomDescription;
-    }
-
-    public void setRoomDescription(String roomDescription) {
-        this.roomDescription = roomDescription;
-    }
+    public byte[] getRoomImage() { return roomImage; }
+    public void setRoomImage(byte[] roomImage) { this.roomImage = roomImage; }
 }

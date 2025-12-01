@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
     app:cardCornerRadius="16dp"
-    app:cardUseCompatPadding="true"
-    app:cardElevation="6dp">
+    app:cardElevation="6dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,15 +28,15 @@
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_marginTop="-28dp"
             android:layout_marginEnd="12dp"
+            android:background="@drawable/status_paid_bg"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:layout_gravity="end"
             android:text="Available"
-            android:textSize="12sp"
             android:textColor="#008000"
-            android:background="@drawable/status_paid_bg" />
+            android:textSize="12sp" />
 
         <!-- ================= CONTENT AREA ================= -->
         <LinearLayout
@@ -65,9 +65,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="₱5,000"
+                    android:textColor="#1E5BFF"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#1E5BFF" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- PER MONTH BELOW PRICE -->
@@ -76,27 +76,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:paddingBottom="6dp"
                 android:text="per month"
                 android:textColor="#666"
-                android:textSize="12sp"
-                android:paddingBottom="6dp" />
+                android:textSize="12sp" />
 
             <!-- ROOM TYPE -->
             <TextView
                 android:id="@+id/txtRoomType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
                 android:text="Single Room"
                 android:textColor="#555"
-                android:textSize="14sp"
-                android:paddingBottom="4dp" />
+                android:textSize="14sp" />
 
             <!-- CAPACITY ROW WITH ICON -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iconCapacity"
@@ -111,13 +111,13 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="6dp"
                     android:text="Capacity: 1 person"
-                    android:textSize="14sp"
-                    android:textColor="#555" />
+                    android:textColor="#555"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/seeDetailsBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="100dp"
                     android:layout_weight="1"
                     android:background="@drawable/crtaccbackground"

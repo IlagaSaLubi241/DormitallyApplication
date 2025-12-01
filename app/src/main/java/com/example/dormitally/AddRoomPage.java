@@ -3,11 +3,13 @@ package com.example.dormitally;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -17,25 +19,24 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.dormitally.adminfragment.Rooms;
-
 import java.io.IOException;
 
 public class AddRoomPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    EditText roomNum,  roomPrice, roomDescription;
-    Spinner spinnerRoomStatus,spinnerRoomCapacity,spinnerRoomType;
-    Button addRoomBtn;
-    ImageView imgPreview;
-    FrameLayout uploadBtn;
-    Uri imageUri = null;   // store selected image
-    String rmNumber;
-    String rmType;
-    String rmStatus;
-    String rmPrice;
-    String rmCapacity;
-    String rmDescription;
-    byte[] rmImage = null;
+    private EditText roomNum, roomPrice, roomDescription;
+    private Spinner spinnerRoomType, spinnerRoomStatus, spinnerRoomCapacity;
+    private Button addRoomBtn, cancelBtn;
+    private ImageView imgPreview;
+    private FrameLayout uploadBtn;
+
+    private Uri imageUri = null;
+    private byte[] rmImage = null;
+
+    private String rmNumber = "", rmType = "", rmStatus = "", rmPrice = "", rmCapacity = "", rmDescription = "";
+
+    private int roomId = -1;   // For update mode
+    private boolean isEditing = false;
+
     private static final int PICK_IMAGE = 101;
 
     @Override
@@ -43,27 +44,52 @@ public class AddRoomPage extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room_page);
 
-        // Bind Views
         roomNum = findViewById(R.id.etRoomNumber);
+        roomPrice = findViewById(R.id.etRoomPrice);
+        roomDescription = findViewById(R.id.etDescription);
         spinnerRoomType = findViewById(R.id.roomTypeSpinner);
         spinnerRoomStatus = findViewById(R.id.roomStatusSpinner);
-        roomPrice = findViewById(R.id.etRoomPrice);
         spinnerRoomCapacity = findViewById(R.id.roomCapacitySpinner);
-        roomDescription = findViewById(R.id.etDescription);
         addRoomBtn = findViewById(R.id.btnSave);
+        cancelBtn = findViewById(R.id.btnCancel);
         uploadBtn = findViewById(R.id.frameImage);
         imgPreview = findViewById(R.id.imgPreview);
 
-        // Upload Image Listener
-        uploadBtn.setOnClickListener(this);
-        // Add Room Button Listener
-        addRoomBtn.setOnClickListener(this);
-        //Spinner
         spinnerRoomType.setOnItemSelectedListener(this);
         spinnerRoomStatus.setOnItemSelectedListener(this);
         spinnerRoomCapacity.setOnItemSelectedListener(this);
-    }
+        addRoomBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
+        uploadBtn.setOnClickListener(this);
 
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            isEditing = true;
+            roomId = b.getInt("roomId");
+
+            roomNum.setText(b.getString("roomNumber"));
+            roomDescription.setText(b.getString("roomDescription"));
+            roomPrice.setText(b.getString("roomPrice"));
+
+            rmType = b.getString("roomType");
+            rmStatus = b.getString("roomStatus");
+            rmCapacity = b.getString("roomCapacity");
+
+            spinnerRoomType.setSelection(((ArrayAdapter) spinnerRoomType.getAdapter()).getPosition(rmType));
+            spinnerRoomStatus.setSelection(((ArrayAdapter) spinnerRoomStatus.getAdapter()).getPosition(rmStatus));
+            spinnerRoomCapacity.setSelection(((ArrayAdapter) spinnerRoomCapacity.getAdapter()).getPosition(rmCapacity));
+
+            byte[] imageBytes = b.getByteArray("roomImage");
+            if (imageBytes != null) {
+                rmImage = imageBytes;
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                imgPreview.setImageBitmap(bitmap);
+                imgPreview.setVisibility(View.VISIBLE);
+            }
+
+            addRoomBtn.setText("Update Room");
+        }
+    }
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -79,73 +105,71 @@ public class AddRoomPage extends AppCompatActivity implements AdapterView.OnItem
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 imgPreview.setImageBitmap(bitmap);
-                imgPreview.setVisibility(ImageView.VISIBLE);
+                imgPreview.setVisibility(View.VISIBLE);
+
+                ImageConverter converter = new ImageConverter(this);
+                rmImage = converter.uriToBytes(imageUri);
+
             } catch (IOException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    // ------------------------- SAVE TO DATABASE ------------------------
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnSave) {
 
-    private void saveRoom() {
+            rmNumber = roomNum.getText().toString().trim();
+            rmPrice = roomPrice.getText().toString().trim();
+            rmDescription = roomDescription.getText().toString().trim();
 
-        rmNumber = roomNum.getText().toString().trim();
-        rmPrice = roomPrice.getText().toString().trim();
-        rmDescription = roomDescription.getText().toString().trim();
+            if (rmNumber.isEmpty() || rmType.isEmpty() || rmStatus.isEmpty()
+                    || rmPrice.isEmpty() || rmCapacity.isEmpty() || rmDescription.isEmpty()) {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        // Convert image
-        ImageConverter converter = new ImageConverter(this);
-        if (imageUri != null) {
-            rmImage = converter.uriToBytes(imageUri);
-        }
+            if (rmImage == null) {
+                Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        // Validate fields
-        if (rmNumber.isEmpty() || rmType.isEmpty() || rmStatus.isEmpty() || rmPrice.isEmpty() || rmCapacity.isEmpty() || rmDescription.isEmpty() || rmImage == null) {
-            Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            Intent data = new Intent();
 
-        // Create Room Object
-        Room room;
-        room = new Room(rmNumber,rmType,rmStatus,Double.parseDouble(rmPrice),Integer.parseInt(rmCapacity),rmDescription,rmImage);
+            if (isEditing) data.putExtra("roomId", roomId);
 
-        // Insert into Database
-        DBHelper db = new DBHelper(this);
-        long result = db.addRoom(room);
+            data.putExtra("roomNumber", rmNumber);
+            data.putExtra("roomType", rmType);
+            data.putExtra("roomStatus", rmStatus);
+            data.putExtra("roomPrice", rmPrice);
+            data.putExtra("roomCapacity", rmCapacity);
+            data.putExtra("roomDescription", rmDescription);
+            data.putExtra("roomImage", rmImage);
 
-        if (result != -1) {
-            Toast.makeText(this, "Room added successfully!", Toast.LENGTH_SHORT).show();
-            finish(); // go back to fragment
-        } else {
-            Toast.makeText(this, "Failed to add room.", Toast.LENGTH_SHORT).show();
+            setResult(Activity.RESULT_OK, data);
+            finish();
+
+        } else if (v.getId() == R.id.frameImage) {
+            openGallery();
+
+        } else if (v.getId() == R.id.btnCancel) {
+            finish();
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int selected = parent.getId();
-        if(selected == R.id.roomTypeSpinner){
+        if (parent.getId() == R.id.roomTypeSpinner)
             rmType = parent.getItemAtPosition(position).toString();
-        } else if (selected == R.id.roomStatusSpinner) {
+
+        else if (parent.getId() == R.id.roomStatusSpinner)
             rmStatus = parent.getItemAtPosition(position).toString();
-        } else if (selected == R.id.roomCapacitySpinner){
+
+        else if (parent.getId() == R.id.roomCapacitySpinner)
             rmCapacity = parent.getItemAtPosition(position).toString();
-        }
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.btnSave) {
-            Intent intent = new Intent(this, Rooms.class);
-            saveRoom();
-            startActivity(intent);
-        } else if (id == R.id.frameImage) {
-            openGallery();
-        }
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 }

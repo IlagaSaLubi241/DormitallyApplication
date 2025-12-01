@@ -156,7 +156,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Room> getAllRooms() {
         ArrayList<Room> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(ROOMS, null, null, null, null, null, "roomPrice");
+        Cursor cursor = db.query(ROOMS, null, null, null, null, null, null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             Room room = new Room(
@@ -175,7 +175,28 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return list;
     }
-        @Override
+    public int deleteRoom(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(ROOMS,"roomId=?",new String[]{id+""});
+        return result;
+    }
+    public long updateRoom(Room room){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put("roomNum", room.getRoomNum());
+        v.put("roomType", room.getRoomType());
+        v.put("roomStatus", room.getRoomStatus());
+        v.put("roomPrice", room.getRoomPrice());
+        v.put("roomCapacity", room.getRoomCapacity());
+        v.put("roomDescription", room.getRoomDescription());
+        v.put("roomPicture", room.getRoomImage());
+
+        return db.update(ROOMS, v, "roomId = ?", new String[]{String.valueOf(room.getRoomId())});
+    }
+
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ROOMASSIGNMENT);
         db.execSQL("DROP TABLE IF EXISTS " + PERSONINFO);

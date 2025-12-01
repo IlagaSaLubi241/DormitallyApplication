@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -42,4 +44,24 @@ public class ImageConverter {
         }
         return null;
     }
+    public Uri bytesToUri(Context context, byte[] bytes) {
+        try {
+            File tempFile = File.createTempFile("room_image_", ".jpg", context.getCacheDir());
+            FileOutputStream fos = new FileOutputStream(tempFile);
+            fos.write(bytes);
+            fos.close();
+
+            Uri uri = androidx.core.content.FileProvider.getUriForFile(
+                    context,
+                    context.getPackageName() + ".fileprovider",
+                    tempFile
+            );
+            return uri;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

@@ -93,10 +93,10 @@
 
             <!-- CAPACITY ROW -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iconCapacity"
@@ -111,40 +111,32 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="6dp"
                     android:text="Capacity: 1 person"
-                    android:textSize="14sp"
-                    android:textColor="#555" />
+                    android:textColor="#555"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:background="@drawable/edittxt_bg_rf"
+                    android:backgroundTint="#23A0E8"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/btnDeleteRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/edittxt_bg_rf"
+                    android:backgroundTint="#F74F23"
+                    app:srcCompat="@android:drawable/ic_menu_delete"
+                    app:tint="@color/white" />
             </LinearLayout>
 
             <!-- ================= BUTTONS AREA ================= -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="16dp">
-
-                <!-- Manage Button -->
-                <Button
-                    android:id="@+id/btnManage"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:layout_weight="1"
-                    android:text="Manage"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/toggle_selected" />
-
-                <!-- Edit Icon Button -->
-                <ImageView
-                    android:id="@+id/btnEdit"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="8dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_edit"
-                    app:tint="@color/black"
-                    android:background="@drawable/edittxt_bg_rf" />
-            </LinearLayout>
 
         </LinearLayout>
 

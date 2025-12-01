@@ -15,8 +15,7 @@ public class RoomItemHolder extends RecyclerView.ViewHolder {
     TextView PerMonth;
     TextView RoomType;
     TextView Capacity;
-    Button Manage;
-    ImageView RoomImage,Edit;
+    ImageView RoomImage,Edit,Delete;
 
     public RoomItemHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,8 +25,8 @@ public class RoomItemHolder extends RecyclerView.ViewHolder {
         PerMonth = itemView.findViewById(R.id.txtPerMonth);
         RoomType = itemView.findViewById(R.id.txtRoomType);
         Capacity = itemView.findViewById(R.id.txtCapacity);
-        Manage = itemView.findViewById(R.id.btnManage);
         Edit = itemView.findViewById(R.id.btnEdit);
         RoomImage = itemView.findViewById(R.id.imgRoom);
+        Delete = itemView.findViewById(R.id.btnDeleteRoom);
     }
 }
