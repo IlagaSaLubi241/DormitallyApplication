@@ -1,18 +1,21 @@
 package com.example.dormitally;
 
+import android.net.Uri;
+
 public class Room {
-    private int roomId;
-    private String roomNum;
-    private String roomType;
-    private String roomStatus;
-    private double roomPrice;
-    private int roomCapacity;
-    private String roomDescription;
-    private byte[] roomImage; // store image as bytes
+    int roomId;
+    String roomNum;
+    String roomType;
+    String roomStatus;
+    double roomPrice;
+    int roomCapacity;
+    String roomDescription;
+    Uri roomImage; // ✔ store image path instead of bytes
 
     // Constructor without roomId (for inserting new rooms)
     public Room(String roomNum, String roomType, String roomStatus,
-                double roomPrice, int roomCapacity, String roomDescription, byte[] roomImage) {
+                double roomPrice, int roomCapacity, String roomDescription, Uri roomImage) {
+
         this.roomNum = roomNum;
         this.roomType = roomType;
         this.roomStatus = roomStatus;
@@ -24,7 +27,8 @@ public class Room {
 
     // Constructor with roomId (for fetching from DB)
     public Room(int roomId, String roomNum, String roomType, String roomStatus,
-                double roomPrice, int roomCapacity, String roomDescription, byte[] roomImage) {
+                double roomPrice, int roomCapacity, String roomDescription, Uri roomImage) {
+
         this.roomId = roomId;
         this.roomNum = roomNum;
         this.roomType = roomType;
@@ -57,6 +61,6 @@ public class Room {
     public String getRoomDescription() { return roomDescription; }
     public void setRoomDescription(String roomDescription) { this.roomDescription = roomDescription; }
 
-    public byte[] getRoomImage() { return roomImage; }
-    public void setRoomImage(byte[] roomImage) { this.roomImage = roomImage; }
+    public Uri getRoomImage() { return roomImage; }
+    public void setRoomImage(Uri roomImage) { this.roomImage = roomImage; }
 }

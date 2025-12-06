@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="600dp"
+    android:layout_gravity="center"
+    android:background="#F5F6FA"
+    android:padding="16dp"
+    app:cardCornerRadius="10dp">
+
+    <!-- Scroll Container -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- TITLE -->
+            <TextView
+                android:id="@+id/titleTenantDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="Tenant Details"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- PERSONAL INFORMATION CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <!-- Full Name -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Full Name"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtFullName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Juan Dela Cruz"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Email -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Email"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="juan@email.com"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <!-- Email -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Contact Number"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtContactNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0927123123"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Gender -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Gender"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Age -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Age"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtAge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Status -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Status"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Single"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Occupation -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Occupation"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtOccupation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Student"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Room -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Room"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtRoom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="r1"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Balance -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="6dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Balance"
+                            android:textColor="#555555" />
+
+                        <TextView
+                            android:id="@+id/txtBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₱5,000"
+                            android:textColor="#2E7D32"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- REASON CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reason for Renting:"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtReason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:text="Need accommodation near university"
+                        android:textColor="#555555" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- VALID ID CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Valid ID for Verification"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imgValidID"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_launcher_background" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- CLOSE BUTTON -->
+            <Button
+                android:id="@+id/btnClose"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#D32F2F"
+                android:fontFamily="sans-serif-medium"
+                android:padding="14dp"
+                android:text="Close"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

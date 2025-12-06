@@ -1,24 +1,34 @@
 package com.example.dormitally;
 
+import android.net.Uri;
+
 public class PersonInfo {
     int userId;
-    String firstName;
-    String lastName;
+    String fullName;
     String gender;
     int age;
     String civilStatus;
     String reasonForRent;
-    byte[] validId;
+    String address;
+    Uri validId;
 
-    public PersonInfo(int userId, String firstName, String lastName, String gender, int age, String civilStatus, String reasonForRent, byte[] validId) {
+    public PersonInfo(int userId, String fullName, String gender, int age, String civilStatus, String reasonForRent, Uri validId,String address) {
         this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.gender = gender;
         this.age = age;
         this.civilStatus = civilStatus;
         this.reasonForRent = reasonForRent;
         this.validId = validId;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getUserId() {
@@ -29,20 +39,12 @@ public class PersonInfo {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getGender() {
@@ -77,11 +79,11 @@ public class PersonInfo {
         this.reasonForRent = reasonForRent;
     }
 
-    public byte[] getValidId() {
+    public Uri getValidId() {
         return validId;
     }
 
-    public void setValidId(byte[] validId) {
+    public void setValidId(Uri validId) {
         this.validId = validId;
     }
 }

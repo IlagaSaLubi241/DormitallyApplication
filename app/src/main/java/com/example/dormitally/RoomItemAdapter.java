@@ -3,6 +3,7 @@ package com.example.dormitally;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class RoomItemAdapter extends RecyclerView.Adapter<RoomItemHolder> {
-    private Context context;
-    private List<Room> list;
-    private LayoutInflater inflater;
-    private OnItemActionListener listener;
+    Context context;
+    List<Room> list;
+    LayoutInflater inflater;
+    OnItemActionListener listener;
 
     public RoomItemAdapter(Context context, List<Room> list, OnItemActionListener listener) {
         this.context = context;
@@ -41,7 +42,18 @@ public class RoomItemAdapter extends RecyclerView.Adapter<RoomItemHolder> {
         holder.PerMonth.setText("per month");
         holder.RoomType.setText(room.getRoomType());
         holder.Capacity.setText("Capacity: " + room.getRoomCapacity() + " person");
+        String status = room.getRoomStatus(); // make sure you retrieve it first
 
+        if (status.equalsIgnoreCase("Available")) {
+            holder.Status.setBackgroundResource(R.drawable.bg_available);
+            holder.Status.setTextColor(Color.parseColor("#079732"));
+        } else if (status.equalsIgnoreCase("Occupied")) {
+            holder.Status.setBackgroundResource(R.drawable.bg_occupied);
+            holder.Status.setTextColor(Color.parseColor("#931C15"));
+        } else if (status.equalsIgnoreCase("Maintenance")) {
+            holder.Status.setBackgroundResource(R.drawable.bg_maintenance);
+            holder.Status.setTextColor(Color.parseColor("#C8B104"));
+        }
         // Correctly handle Delete click
         holder.Delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +73,7 @@ public class RoomItemAdapter extends RecyclerView.Adapter<RoomItemHolder> {
             }
         });
 
-        byte[] imageBytes = room.getRoomImage();
-        if (imageBytes != null && imageBytes.length > 0) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            holder.RoomImage.setImageBitmap(bitmap);
-        } else {
-            holder.RoomImage.setImageResource(R.drawable.ic_people);
-        }
+        holder.RoomImage.setImageURI(room.getRoomImage());
     }
 
     @Override

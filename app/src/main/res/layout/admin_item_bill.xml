@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center|top"
+    android:layout_margin="8dp"
+    android:padding="12dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- Top row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pedro Reyes"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱3,500"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Date + Room + Status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvDateRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="December 25"
+                android:textColor="#444444"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Room 125"
+                android:textColor="#444444"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvPaidStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/bg_available"
+                android:padding="5dp"
+                android:text="paid"
+                android:textColor="#0A7A00"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvVerificationStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/bg_occupied"
+                android:padding="5dp"
+                android:text="Unverified"
+                android:textColor="#BA5A00"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Paid Date + Method -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Paid:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/paidDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="2025-12-30"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="Method:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/methodPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Online"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnViewDetails"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selected"
+                android:backgroundTint="#0D6EFD"
+                android:text="View Details"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnVerifyPayment"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_selected"
+                android:backgroundTint="#00A42D"
+                android:text="Verify Payment"
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/edittxt_bg_rf"
+                android:backgroundTint="#23A0E8"
+                android:padding="10dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/btnDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/edittxt_bg_rf"
+                android:backgroundTint="#F74F23"
+                app:srcCompat="@android:drawable/ic_menu_delete"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

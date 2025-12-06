@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/material_dynamic_neutral95"
     android:orientation="vertical"
     tools:context=".adminfragment.OverviewAdmin">
 
@@ -14,17 +15,16 @@
         android:padding="16dp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <!-- ======== FIRST ROW ======== -->
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:paddingBottom="12dp">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <!-- Active Tenants -->
                 <androidx.cardview.widget.CardView
@@ -32,29 +32,33 @@
                     android:layout_height="110dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="6dp">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:padding="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:src="@drawable/ic_people"
-                            app:tint = "#0000FF"/>
+                            app:tint="#0000FF" />
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:paddingLeft="12dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="12dp">
 
                             <TextView
+                                android:id="@+id/numTenant"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="2"
@@ -80,28 +84,32 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="6dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:padding="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="50dp"
                             android:src="@drawable/ic_home"
-                            app:tint = "#00FF00"/>
+                            app:tint="#12BA23" />
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:paddingLeft="12dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="12dp">
 
                             <TextView
+                                android:id="@+id/availRoom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2"
@@ -124,11 +132,12 @@
 
             <!-- ======== SECOND ROW ======== -->
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:paddingBottom="12dp">
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="12dp"
+                android:weightSum="2">
 
                 <!-- Total Revenue -->
                 <androidx.cardview.widget.CardView
@@ -137,28 +146,32 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="6dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:padding="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="36dp"
                             android:src="@drawable/ic_bills"
-                            app:tint = "#7F00FF"/>
+                            app:tint="#7F00FF" />
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:paddingLeft="12dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="12dp">
 
                             <TextView
+                                android:id="@+id/totalRevenue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="₱13,500"
@@ -184,28 +197,32 @@
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="6dp">
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardUseCompatPadding="false"
+                    app:cardPreventCornerOverlap="false">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:padding="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
                         <ImageView
-                            android:src="@drawable/ic_message"
                             android:layout_width="35dp"
                             android:layout_height="36dp"
-                            app:tint="#FF0000"/>
+                            android:src="@drawable/ic_message"
+                            app:tint="#FF0000" />
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:paddingLeft="12dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="12dp">
 
                             <TextView
+                                android:id="@+id/messagesTxt"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="0"
@@ -226,29 +243,48 @@
 
             </LinearLayout>
 
-            <!-- ======== PENDING APPROVALS ======== -->
+            <!-- ======== PENDING APPROVALS SECTION ======== -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="6dp"
-                android:layout_marginBottom="16dp">
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Pending Approvals"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Pending Approvals"
+                            android:textColor="#000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/totalPending"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="TextView" />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/pendingRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -260,13 +296,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="6dp">
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -279,12 +318,6 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-
-                    <!-- Payment Received -->
-
-                    <!-- New Message -->
-
-                    <!-- Maintenance -->
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

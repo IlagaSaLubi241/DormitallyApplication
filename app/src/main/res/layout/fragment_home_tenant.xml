@@ -39,11 +39,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Current Balance"
+                        android:text="Total Balance"
                         android:textColor="#727A8C"
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/totalBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -53,35 +54,6 @@
                         android:textStyle="bold" />
 
                     <!-- Due Date Badge -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="#FFF2E6"
-                        android:backgroundTint="#FFE7D1"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="6dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:src="@drawable/ic_clock"
-                            app:tint="#FF8A4C" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:text="Due: 2025-12-05"
-                            android:textColor="#FF8A4C"
-                            android:textSize="12sp" />
-                    </LinearLayout>
 
                     <!-- Pay Now Button -->
                     <Button
@@ -127,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="12dp"
-                        android:background="#F5F6FA"
+                        android:background="@drawable/crtaccbackground"
                         android:backgroundTint="#F2F4F8"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -159,7 +131,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F5F6FA"
+                        android:background="@drawable/crtaccbackground"
                         android:backgroundTint="#F2F4F8"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -222,6 +194,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/tenantIdTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -240,6 +213,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/roomNumTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

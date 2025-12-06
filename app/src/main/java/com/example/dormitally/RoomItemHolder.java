@@ -1,7 +1,6 @@
 package com.example.dormitally;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +26,6 @@ public class RoomItemHolder extends RecyclerView.ViewHolder {
         Capacity = itemView.findViewById(R.id.txtCapacity);
         Edit = itemView.findViewById(R.id.btnEdit);
         RoomImage = itemView.findViewById(R.id.imgRoom);
-        Delete = itemView.findViewById(R.id.btnDeleteRoom);
+        Delete = itemView.findViewById(R.id.btnDelete);
     }
 }

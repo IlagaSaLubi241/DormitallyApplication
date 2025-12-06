@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="status_available">#C8E6C9</color>   <!-- light green -->
+    <color name="status_occupied">#FFCDD2</color>    <!-- light red/pink -->
+    <color name="status_maintenance">#FFE0B2</color> <!-- orange-yellow -->
+    <color name="status_stroke">#33000000</color>
+
+    <color name="pendingYellow">#FFF5A5</color>
+    <color name="paidLightGreen">#C8F7C5</color>
+    <color name="paidDarkGreen">#7ED957</color>
+    <color name="overdueRed">#FF9A9A</color>
+
 </resources>

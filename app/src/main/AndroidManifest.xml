@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dormitally">
         <activity
+            android:name=".CreateBill"
+            android:exported="false" />
+        <activity
             android:name=".AddRoomPage"
             android:exported="false" />
         <activity

@@ -2,6 +2,7 @@ package com.example.dormitally.adminfragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,20 +29,21 @@ import java.util.List;
 
 public class Rooms extends Fragment implements View.OnClickListener, RoomItemAdapter.OnItemActionListener {
 
-    private View view;
-    private Button addRoombtn;
-    private RecyclerView recyclerView;
-    private RoomItemAdapter adapter;
-    private List<Room> roomsList = new ArrayList<>();
-    private DBHelper dbHelper;
-    private int editingPosition = -1;
-    private boolean isEditing = false;
+    View view;
+    Button addRoombtn;
+    RecyclerView recyclerView;
+    RoomItemAdapter adapter;
+    List<Room> roomsList = new ArrayList<>();
+    DBHelper dbHelper;
+    int editingPosition = -1;
+    boolean isEditing = false;
 
     private ActivityResultLauncher<Intent> roomLauncher;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         view = inflater.inflate(R.layout.fragment_rooms_admin, container, false);
 
         addRoombtn = view.findViewById(R.id.btnAddRoom);
@@ -57,63 +59,68 @@ public class Rooms extends Fragment implements View.OnClickListener, RoomItemAda
         roomLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
 
-                        Intent data = result.getData();
+                    if (result.getResultCode() != Activity.RESULT_OK || result.getData() == null)
+                        return;
 
-                        int roomId = data.getIntExtra("roomId", -1);
-                        String roomNumber = data.getStringExtra("roomNumber");
-                        String roomType = data.getStringExtra("roomType");
-                        String roomStatus = data.getStringExtra("roomStatus");
-                        String roomPrice = data.getStringExtra("roomPrice");
-                        String roomCapacity = data.getStringExtra("roomCapacity");
-                        String roomDescription = data.getStringExtra("roomDescription");
-                        byte[] roomImage = data.getByteArrayExtra("roomImage");
+                    Bundle bundle = result.getData().getExtras();
+                    if (bundle == null) return;
 
-                        if (isEditing) {
-                            Room updated = new Room(
-                                    roomId,
-                                    roomNumber,
-                                    roomType,
-                                    roomStatus,
-                                    Double.parseDouble(roomPrice),
-                                    Integer.parseInt(roomCapacity),
-                                    roomDescription,
-                                    roomImage
-                            );
+                    int roomId   = bundle.getInt("roomId", -1);
+                    String number = bundle.getString("roomNumber");
+                    String type   = bundle.getString("roomType");
+                    String status = bundle.getString("roomStatus");
+                    String price  = bundle.getString("roomPrice");
+                    String cap    = bundle.getString("roomCapacity");
+                    String desc   = bundle.getString("roomDescription");
+                    Uri imageURI  = Uri.parse(bundle.getString("roomImagePath"));
 
-                            long ok = dbHelper.updateRoom(updated);
-                            if (ok != -1)
-                                Toast.makeText(getActivity(), "Room updated", Toast.LENGTH_SHORT).show();
+                    if (isEditing) {
 
+                        Room updated = new Room(
+                                roomId,
+                                number,
+                                type,
+                                status,
+                                Double.parseDouble(price),
+                                Integer.parseInt(cap),
+                                desc,
+                                imageURI
+                        );
+
+                        long ok = dbHelper.updateRoom(updated);
+
+                        if (ok > 0) {
                             roomsList.set(editingPosition, updated);
                             adapter.notifyItemChanged(editingPosition);
+                            Toast.makeText(getActivity(), "Room updated", Toast.LENGTH_SHORT).show();
+                        }
 
-                            isEditing = false;
+                        isEditing = false;
 
-                        } else {
-                            Room newRoom = new Room(
-                                    0, // auto increment in DB
-                                    roomNumber,
-                                    roomType,
-                                    roomStatus,
-                                    Double.parseDouble(roomPrice),
-                                    Integer.parseInt(roomCapacity),
-                                    roomDescription,
-                                    roomImage
-                            );
+                    } else {
 
-                            long insertedId = dbHelper.addRoom(newRoom);
-                            newRoom.setRoomId((int) insertedId);
+                        Room newRoom = new Room(
+                                number,
+                                type,
+                                status,
+                                Double.parseDouble(price),
+                                Integer.parseInt(cap),
+                                desc,
+                                imageURI
+                        );
 
+                        long inserted = dbHelper.addRoom(newRoom);
+                        if (inserted > 0) {
+                            newRoom.setRoomId((int) inserted);
                             roomsList.add(newRoom);
                             adapter.notifyItemInserted(roomsList.size() - 1);
-
                             Toast.makeText(getActivity(), "Room added", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
+
 
         addRoombtn.setOnClickListener(this);
 
@@ -138,13 +145,14 @@ public class Rooms extends Fragment implements View.OnClickListener, RoomItemAda
         intent.putExtra("roomPrice", String.valueOf(room.getRoomPrice()));
         intent.putExtra("roomCapacity", String.valueOf(room.getRoomCapacity()));
         intent.putExtra("roomDescription", room.getRoomDescription());
-        intent.putExtra("roomImage", room.getRoomImage());
+        intent.putExtra("roomImagePath", room.getRoomImage().toString());
 
         isEditing = true;
         editingPosition = position;
 
         roomLauncher.launch(intent);
     }
+
 
     @Override
     public void onDelete(Room room, int position) {

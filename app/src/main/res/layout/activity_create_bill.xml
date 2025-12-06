@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateBill">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:text="Create New Bill"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="2dp"
+                        android:text="Select Tenant *"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTenant"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/input_fields" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="14dp">
+
+                        <!-- MONTH -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="6dp"
+                                android:text="Month *"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/spinnerMonth"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:background="@drawable/edittxt_bg_rf"
+                                android:entries="@array/Month" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent" />
+
+                        <!-- YEAR -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="6dp"
+                                android:text="Year *"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <NumberPicker
+                                android:id="@+id/yearPicker"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="6dp"
+                        android:text="Due Date *"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- SELECT TENANT -->
+
+            <!-- MONTH + YEAR ROW -->
+
+            <!-- DUE DATE -->
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="10dp"
+                        android:text="Bill Breakdown"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Monthly Rent (₱)" />
+
+                    <EditText
+                        android:id="@+id/rentEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:editable="false"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="Electricity (₱)" />
+
+                    <EditText
+                        android:id="@+id/electricEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="Water (₱)" />
+
+                    <EditText
+                        android:id="@+id/waterEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="WiFi (₱)" />
+
+                    <EditText
+                        android:id="@+id/wifiEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="Maintenance Fee (₱)" />
+
+                    <EditText
+                        android:id="@+id/maintenanceEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/totalAmountTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="16dp"
+                        android:text="Total Amount: ₱0"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- MONTHLY RENT -->
+
+            <!-- ELECTRICITY -->
+
+            <!-- WATER -->
+
+            <!-- WIFI -->
+
+            <!-- MAINTENANCE -->
+
+            <!-- TOTAL -->
+
+            <!-- BUTTONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:paddingTop="20dp">
+
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_unselected"
+                    android:text="Cancel"
+                    android:textColor="#000000" />
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/createBillBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_selected"
+                    android:text="Create Bill"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

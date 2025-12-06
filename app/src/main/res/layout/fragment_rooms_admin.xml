@@ -5,16 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="10dp"
     tools:context=".adminfragment.Rooms">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/design_default_color_surface"
         app:cardElevation="6dp"
-        android:padding="16dp">
+        app:cardPreventCornerOverlap="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,8 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingBottom="12dp">
 
                 <TextView
@@ -35,9 +37,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Room Management"
+                    android:textColor="#333"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#333" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnAddRoom"
@@ -54,11 +56,6 @@
             </LinearLayout>
 
             <!-- ======================== DIVIDER ======================== -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#DDDDDD"
-                android:layout_marginBottom="12dp"/>
 
             <!-- ======================== ROOM LIST ======================== -->
             <androidx.recyclerview.widget.RecyclerView

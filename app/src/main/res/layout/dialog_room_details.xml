@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:backgroundTint="@color/cardview_light_background"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="false">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp">
+
+                    <!-- Room Photo -->
+                    <ImageView
+                        android:id="@+id/imgDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@mipmap/ic_launcher_round" />
+
+                    <!-- Back Button -->
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/crtaccbackground"
+                        android:backgroundTint="@color/black"
+                        android:elevation="6dp"
+                        android:padding="8dp"
+                        android:src="@drawable/baseline_arrow_back_24" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Room Number -->
+                    <TextView
+                        android:id="@+id/tvRoomNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Room R-201"
+                        android:textColor="#000"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <!-- Room Type Subtitle -->
+                    <TextView
+                        android:id="@+id/tvRoomType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:text="Single Room"
+                        android:textColor="#666"
+                        android:textSize="15sp" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="#e0e0e0" />
+
+                    <!-- Info Row: ROOM TYPE -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Room Type"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tenantName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Single"
+                            android:textColor="#000"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#e0e0e0" />
+
+                    <!-- Info Row: CAPACITY -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Capacity"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRoomCapacity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1 person"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#e0e0e0" />
+
+                    <!-- Info Row: STATUS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Status"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRoomStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/status_pending_bg"
+                            android:padding="6dp"
+                            android:paddingLeft="14dp"
+                            android:paddingRight="14dp"
+                            android:text="Occupied"
+                            android:textColor="#D9534F"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#e0e0e0" />
+
+                    <!-- Info Row: PRICE -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Monthly Rate"
+                            android:textColor="#666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvRoomPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₱5,000"
+                            android:textColor="#0066FF"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="#e0e0e0" />
+
+                    <!-- Description Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textColor="#666"
+                        android:textSize="14sp" />
+
+                    <!-- Description Text -->
+                    <TextView
+                        android:id="@+id/tvRoomDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Room description goes here."
+                        android:textColor="#444"
+                        android:textSize="15sp" />
+
+                    <!-- Apply Button -->
+                    <Button
+                        android:id="@+id/btnApply"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:background="@drawable/toggle_selected"
+                        android:padding="14dp"
+                        android:text="Apply to this Room"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

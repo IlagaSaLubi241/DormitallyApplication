@@ -12,7 +12,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Create Room"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="20dp"
-                android:background="#E8E8E8"
+                android:background="@drawable/edittxt_bg_rf"
                 android:clickable="true"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center">
@@ -68,109 +68,128 @@
 
 
             <!-- Room Number -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Room Number"
-                android:textColor="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/etRoomNumber"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:background="@drawable/edittxt_bg_rf"
-                android:hint="R-123"
-                android:inputType="text"
-                android:padding="10dp" />
+                android:layout_height="match_parent"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Room Number"
+                        android:textColor="@color/black" />
+
+                    <EditText
+                        android:id="@+id/etRoomNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="61dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="R-123"
+                        android:inputType="text"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Room Type"
+                        android:textColor="@color/black" />
+
+                    <Spinner
+                        android:id="@+id/roomTypeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="61dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:entries="@array/RoomType"
+                        android:spinnerMode="dropdown" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Room Status"
+                        android:textColor="@color/black" />
+
+                    <Spinner
+                        android:id="@+id/roomStatusSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="61dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:entries="@array/RoomStatus"
+                        android:spinnerMode="dropdown" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Room Price (₱)"
+                        android:textColor="@color/black" />
+
+                    <EditText
+                        android:id="@+id/etRoomPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:hint="5,000"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Capacity"
+                        android:textColor="@color/black" />
+
+                    <Spinner
+                        android:id="@+id/roomCapacitySpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="61dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:entries="@array/Capacity"
+                        android:spinnerMode="dropdown" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="Description"
+                        android:textColor="@color/black" />
+
+                    <EditText
+                        android:id="@+id/etDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:background="@drawable/edittxt_bg_rf"
+                        android:gravity="top"
+                        android:hint="Own Cr,Double Deck, and has a Tables"
+                        android:inputType="textMultiLine"
+                        android:padding="10dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Room Type -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="Room Type"
-                android:textColor="#FFFFFF" />
-
-            <Spinner
-                android:id="@+id/roomTypeSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:entries="@array/RoomType"
-                android:spinnerMode="dropdown" />
 
             <!-- Room Status -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="Room Status"
-                android:textColor="#FFFFFF" />
-
-            <Spinner
-                android:id="@+id/roomStatusSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:entries="@array/RoomStatus"
-                android:spinnerMode="dropdown" />
 
             <!-- Room Price -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="Room Price (₱)"
-                android:textColor="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/etRoomPrice"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/edittxt_bg_rf"
-                android:hint="5,000"
-                android:inputType="numberDecimal"
-                android:padding="10dp" />
 
             <!-- Capacity -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="Capacity"
-                android:textColor="#FFFFFF" />
-
-            <Spinner
-                android:id="@+id/roomCapacitySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:entries="@array/Capacity"
-                android:spinnerMode="dropdown" />
 
             <!-- Description -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:text="Description"
-                android:textColor="@color/white" />
-
-            <EditText
-                android:id="@+id/etDescription"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@drawable/edittxt_bg_rf"
-                android:gravity="top"
-                android:hint="Own Cr,Double Deck, and has a Tables"
-                android:inputType="textMultiLine"
-                android:padding="10dp" />
 
             <!-- Buttons -->
             <LinearLayout
@@ -185,10 +204,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/toggle_unselected"
-                    android:backgroundTint="@color/white"
+                    android:background="@drawable/toggle_selected"
+                    android:backgroundTint="#0000FF"
                     android:text="Save"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <Space
                     android:layout_width="12dp"
@@ -199,10 +218,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/toggle_selected"
-                    android:backgroundTint="#0000FF"
+                    android:background="@drawable/toggle_unselected"
+                    android:backgroundTint="@color/ic_launcher_background"
                     android:text="Cancel"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/black" />
             </LinearLayout>
 
         </LinearLayout>
