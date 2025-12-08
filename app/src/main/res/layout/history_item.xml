@@ -26,7 +26,7 @@
 
                 <!-- Month -->
                 <TextView
-                    android:id="@+id/txtMonth"
+                    android:id="@+id/txtMonthYear"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

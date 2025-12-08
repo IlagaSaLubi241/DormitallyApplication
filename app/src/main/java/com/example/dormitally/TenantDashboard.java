@@ -1,12 +1,9 @@
 package com.example.dormitally;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.dormitally.tenantfragment.BillsPage;
@@ -14,47 +11,59 @@ import com.example.dormitally.tenantfragment.HistoryPage;
 import com.example.dormitally.tenantfragment.HomePage;
 import com.example.dormitally.tenantfragment.MessagePage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class TenantDashboard extends AppCompatActivity {
 
+    private int userId; // <-- Store the tenant ID coming from login
+    DBHelper dbHelper;
+    TextView name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_tenant_dashboard);
+        name = findViewById(R.id.tenant_Name);
+        // ✅ Get userId from MainActivity login
+        userId = getIntent().getIntExtra("userId", -1);
+        dbHelper = new DBHelper(this);
+        String name = dbHelper.getFullNameByUserId(userId);
+
+        this.name.setText(name);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.nav_home);
-        bottomNav.setOnItemSelectedListener(navListener);
 
-        Fragment selectedFragment = new HomePage();
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment fragment;
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                selectedFragment).commit();
+            if (item.getItemId() == R.id.nav_home) {
+                fragment = new HomePage();
+            } else if (item.getItemId() == R.id.nav_bills) {
+                fragment = new BillsPage();
+            } else if (item.getItemId() == R.id.nav_history) {
+                fragment = new HistoryPage();
+            } else if (item.getItemId() == R.id.nav_messages) {
+                fragment = new MessagePage();
+            } else {
+                fragment = new HomePage();
+            }
 
+            loadFragmentWithUserId(fragment);
+            return true;
+        });
+
+        // Load default fragment with userId
+        loadFragmentWithUserId(new HomePage());
     }
 
-    private NavigationBarView.OnItemSelectedListener navListener =
-            item -> {
-                int itemId = item.getItemId(); /* obtain the selected item ID from your source */
-                Fragment selectedFragment = null;
+    // ⭐ Pass userId to any fragment
+    private void loadFragmentWithUserId(Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", userId);
+        fragment.setArguments(bundle);
 
-                if (itemId == R.id.nav_home) {
-                    selectedFragment = new HomePage();
-                } else if (itemId == R.id.nav_bills) {
-                    selectedFragment = new BillsPage();
-                } else if (itemId == R.id.nav_history) {
-                    // Handle the profile case
-                    selectedFragment = new HistoryPage();
-                } else if (itemId == R.id.nav_messages) {
-                    // Handle the profile case
-                    selectedFragment = new MessagePage();
-                }else {
-                    selectedFragment = new HomePage();
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
-            };
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
 }

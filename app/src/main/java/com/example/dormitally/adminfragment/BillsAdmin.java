@@ -1,6 +1,7 @@
 package com.example.dormitally.adminfragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -210,6 +211,79 @@ public class BillsAdmin extends Fragment implements View.OnClickListener, AdminB
             Toast.makeText(getActivity(), "Delete failed!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onView(int balanceId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.view_billdetails_popup, null);
+        builder.setView(view);
+
+        TenantBillDetails tb = dbHelper.getTenantBillDetailsByBalanceId(balanceId);
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        // ----- FIND VIEWS -----
+        TextView txtBillPeriod = view.findViewById(R.id.txtBillPeriod);
+        TextView txtBillDueDate = view.findViewById(R.id.txtBillDueDate);
+        TextView txtBillStatus = view.findViewById(R.id.txtBillStatus);
+        TextView txtBillVerification = view.findViewById(R.id.txtBillVerification);
+        TextView txtModeOfPayment = view.findViewById(R.id.txtModeOfPayment);
+
+        TextView txtRent = view.findViewById(R.id.txtRent);
+        TextView txtElectric = view.findViewById(R.id.txtElectric);
+        TextView txtWater = view.findViewById(R.id.txtWater);
+        TextView txtWifi = view.findViewById(R.id.txtWifi);
+        TextView txtMaintenance = view.findViewById(R.id.txtMaintenance);
+        TextView txtTotalAmount = view.findViewById(R.id.txtTotalAmount);
+
+        Button btnClose = view.findViewById(R.id.btnClose);
+
+        // ----- SET DATA -----
+        txtBillPeriod.setText(tb.getDate());
+        txtBillDueDate.setText(tb.getDueDate());
+        txtBillStatus.setText(tb.getBalanceStatus());
+        txtBillVerification.setText(tb.getVerification());
+
+        txtRent.setText("₱" + tb.getMonthlyRentBalance());
+        txtElectric.setText("₱" + tb.getElectricBalance());
+        txtWater.setText("₱" + tb.getWaterBalance());
+        txtWifi.setText("₱" + tb.getWifiBalance());
+        txtMaintenance.setText("₱" + tb.getMaintenanceFee());
+        txtTotalAmount.setText("Total: ₱" + tb.getTotalBalance());
+
+        // ----- SHOW PAYMENT METHOD ONLY IF PAID -----
+        if (tb.getBalanceStatus().equalsIgnoreCase("Paid")) {
+            txtModeOfPayment.setVisibility(View.VISIBLE);
+            txtModeOfPayment.setText(tb.getPaymentMethod());
+        } else {
+            txtModeOfPayment.setVisibility(View.GONE);
+        }
+
+        // CLOSE
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+    @Override
+    public void onVerify(TenantBillDetails bill, int position) {
+
+        boolean success = dbHelper.verifyPaymentByBalanceId(bill.getBalanceId());
+
+        if (success) {
+            // Update UI
+            bill.setVerification("Verified");
+            bill.setBalanceStatus("Paid");
+
+            adapter.notifyItemChanged(position);
+            refreshSummary();
+
+            Toast.makeText(getContext(), "Payment Verified Successfully!", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getContext(), "Verification Failed!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void refreshSummary() {
         double pendingAmount = dbHelper.getTotalPendingAmount();
         double collectedAmount = dbHelper.getTotalCollectedAmount();

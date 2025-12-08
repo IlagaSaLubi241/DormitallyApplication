@@ -63,6 +63,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/currentBillTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -86,6 +87,7 @@
                                 app:tint="#FF7A55" />
 
                             <TextView
+                                android:id="@+id/currentBillDue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
@@ -112,6 +114,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/monthlyRentalTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₱5,000.00"
@@ -137,10 +140,11 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/electricBalanceTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Included"
-                            android:textColor="#0BAF4B"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -160,10 +164,11 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/waterBalanceTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Included"
-                            android:textColor="#0BAF4B"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -184,10 +189,11 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/wifiBalanceTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Included"
-                            android:textColor="#0BAF4B"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -216,6 +222,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/currentBillTotal2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="₱5,000.00"
@@ -239,7 +246,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:padding="18dp"
@@ -347,29 +354,6 @@
                     </LinearLayout>
 
                     <!-- Months Rented -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Months Rented"
-                            android:textColor="#333"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/txtMonthsRented"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="5 months"
-                            android:textColor="#000"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -118,6 +118,30 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(userId) REFERENCES accounts(userId)" +
                 ")";
 
+        String tablePaymentInfo = "CREATE TABLE paymentInfo (" +
+                "paymentId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "balanceId INTEGER NOT NULL, " +
+                "userId INTEGER NOT NULL, " +
+                "amount REAL NOT NULL, " +
+                "paymentMethod TEXT NOT NULL, " +
+                "referenceNum TEXT, " +
+                "paidDate TEXT NOT NULL, " +
+                "FOREIGN KEY(balanceId) REFERENCES balance(balanceId) ON DELETE CASCADE, " +
+                "FOREIGN KEY(userId) REFERENCES accounts(userId) ON DELETE CASCADE" +
+                ")";
+        String tablemessages =
+                "CREATE TABLE message(" +
+                        "messageId INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "senderId INTEGER NOT NULL, " +
+                        "receiverId INTEGER NOT NULL, " +
+                        "messageText TEXT NOT NULL, " +
+                        "title TEXT NOT NULL, " +
+                        "timestamp TEXT, " +
+                        "status TEXT DEFAULT 'unread'" +
+                        ");";
+
+
+
         db.execSQL("PRAGMA foreign_keys=ON;");
         db.execSQL(tableAccounts);
         db.execSQL(tablePersonInfo);
@@ -126,7 +150,570 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(tableBalance);
         db.execSQL(tableTransaction);
         db.execSQL(tableAudit);
+        db.execSQL(tablePaymentInfo);
+        db.execSQL(tablemessages);
+        createDefaultAdmin(db);
     }
+
+    public int getTotalTransactionsCount() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM paymentInfo",
+                null
+        );
+
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+
+    public int numOfActiveTenants() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM accounts WHERE role = 'Tenant' AND status = 'Active'",
+                null
+        );
+
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public String getOccupancyRate() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Count occupied rooms
+        Cursor occupiedCursor = db.rawQuery(
+                "SELECT COUNT(*) FROM rooms WHERE roomStatus = 'Occupied'", null);
+        occupiedCursor.moveToFirst();
+        int occupied = occupiedCursor.getInt(0);
+        occupiedCursor.close();
+
+        // Count total rooms
+        Cursor totalCursor = db.rawQuery(
+                "SELECT COUNT(*) FROM rooms", null);
+        totalCursor.moveToFirst();
+        int total = totalCursor.getInt(0);
+        totalCursor.close();
+
+        db.close();
+
+        if (total == 0) return "0%";  // avoid division by zero
+
+        int percentage = (int) ((occupied * 100.0f) / total);
+
+        return percentage + "%";  // example: "40%"
+    }
+
+
+    public String getOccupiedRoomsFraction() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Count occupied rooms
+        Cursor occupiedCursor = db.rawQuery(
+                "SELECT COUNT(*) FROM rooms WHERE roomStatus = 'Occupied'", null);
+        occupiedCursor.moveToFirst();
+        int occupied = occupiedCursor.getInt(0);
+        occupiedCursor.close();
+
+        // Count total rooms
+        Cursor totalCursor = db.rawQuery(
+                "SELECT COUNT(*) FROM rooms", null);
+        totalCursor.moveToFirst();
+        int total = totalCursor.getInt(0);
+        totalCursor.close();
+
+        db.close();
+
+        return occupied + "/" + total;   // example: "2/5"
+    }
+
+    public ArrayList<Transaction> getAllTransactions() {
+        ArrayList<Transaction> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM transactionTable ORDER BY paidDate DESC";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Transaction t = new Transaction();
+
+                t.setTransactionId(cursor.getInt(cursor.getColumnIndexOrThrow("transactionId")));
+                t.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow("userId")));
+                t.setBalanceId(cursor.getInt(cursor.getColumnIndexOrThrow("balanceId")));
+                t.setAmount(cursor.getDouble(cursor.getColumnIndexOrThrow("amount")));
+                t.setDate(cursor.getString(cursor.getColumnIndexOrThrow("paidDate")));
+                t.setPaymentMethod(cursor.getString(cursor.getColumnIndexOrThrow("paymentMethod")));
+                t.setReferenceNum(cursor.getString(cursor.getColumnIndexOrThrow("referenceNum")));
+
+                list.add(t);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+    public long addMessage(IssueMessage message) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("senderId", message.getSenderId());
+        values.put("receiverId", message.getRecieverId());
+        values.put("messageText", message.getMessageText());
+        values.put("title", message.getTitle());
+        values.put("timestamp", message.getTimestamp());
+        values.put("status", message.getStatus());
+        long id = db.insert("message", null, values);
+
+        return id;
+    }
+    public void createDefaultAdmin(SQLiteDatabase db) {
+
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM accounts WHERE role = 'admin' LIMIT 1",
+                null
+        );
+
+        boolean adminExists = cursor.moveToFirst();
+        cursor.close();
+
+        if (adminExists) return;
+
+        ContentValues cv = new ContentValues();
+        cv.put("userName", "admin");
+        cv.put("password", "admin123");
+        cv.put("role", "admin");
+        cv.put("contactNum", "0000000000");
+        cv.put("email", "admin@system.com");
+        cv.put("status", "active");
+        cv.put("startDate", String.valueOf(System.currentTimeMillis()));
+
+        db.insert("accounts", null, cv);
+    }
+
+
+
+    public List<IssueMessage> getMessagesByUserId(int userId) {
+        List<IssueMessage> messageList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM message WHERE senderId = ? OR receiverId = ? ORDER BY timestamp DESC";
+        Cursor cursor = db.rawQuery(query, new String[]{
+                String.valueOf(userId),
+                String.valueOf(userId)
+        });
+
+        if (cursor.moveToFirst()) {
+            do {
+                IssueMessage msg = new IssueMessage(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("messageId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("senderId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("receiverId")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("messageText")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("timestamp")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("status")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("title"))
+                );
+                messageList.add(msg);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return messageList;
+    }
+    public List<IssueMessage> getAllMessages() {
+        List<IssueMessage> messageList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM message ORDER BY timestamp DESC";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                IssueMessage msg = new IssueMessage(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("messageId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("senderId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("receiverId")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("messageText")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("timestamp")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("status")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("title"))
+                );
+                messageList.add(msg);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return messageList;
+    }
+
+    public List<Transaction> getTransactionsByUserId(int userId) {
+        List<Transaction> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery(
+                "SELECT transactionId, userId, balanceId, amount, paidDate, paymentMethod, referenceNum " +
+                        "FROM transactionTable WHERE userId = ? ORDER BY transactionId DESC",
+                new String[]{String.valueOf(userId)}
+        );
+
+        if (c.moveToFirst()) {
+            do {
+                Transaction t = new Transaction(
+                        c.getInt(0),     // transactionId
+                        c.getInt(1),     // userId
+                        c.getInt(2),     // balanceId
+                        c.getDouble(3),  // amount
+                        c.getString(4),  // paidDate
+                        c.getString(5),  // paymentMethod
+                        c.getString(6)   // referenceNum
+                );
+                list.add(t);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return list;
+    }
+
+    public boolean verifyPaymentByBalanceId(int balanceId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+
+        try {
+            // 1. GET PAYMENT INFO BASED ON BALANCE ID
+            Cursor c = db.rawQuery(
+                    "SELECT paymentId, userId, amount, paymentMethod, referenceNum, paidDate " +
+                            "FROM paymentinfo WHERE balanceId = ?",
+                    new String[]{String.valueOf(balanceId)}
+            );
+
+            if (!c.moveToFirst()) {
+                c.close();
+                return false; // no payment found for this balance
+            }
+
+            int paymentId   = c.getInt(0);
+            int userId      = c.getInt(1);
+            double amount   = c.getDouble(2);
+            String method   = c.getString(3);
+            String refNum   = c.getString(4);
+            String paidDate = c.getString(5);
+            c.close();
+
+            // 2. INSERT INTO transactionTable
+            ContentValues t = new ContentValues();
+            t.put("userId", userId);
+            t.put("balanceId", balanceId);
+            t.put("amount", amount);
+            t.put("paymentMethod", method);
+            t.put("referenceNum", refNum);
+            t.put("paidDate", paidDate);
+
+            long result = db.insert("transactionTable", null, t);
+            if (result == -1) return false;
+
+            // 3. UPDATE BALANCE TABLE
+            ContentValues update = new ContentValues();
+            update.put("balanceStatus", "Paid");
+            update.put("verification", "Verified");
+
+            db.update("balance", update, "balanceId=?", new String[]{String.valueOf(balanceId)});
+
+            // 4. DELETE FROM paymentInfo
+            db.delete("paymentinfo", "paymentId=?", new String[]{String.valueOf(paymentId)});
+
+            db.setTransactionSuccessful();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public boolean addPaymentInfo(int balanceId, int userId, double amount, String method, String refNum, String paidDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("balanceId", balanceId);
+        cv.put("userId", userId);
+        cv.put("amount", amount);
+        cv.put("paymentMethod", method);
+        cv.put("referenceNum", refNum);
+        cv.put("paidDate", paidDate);
+
+        long result = db.insert("paymentinfo", null, cv);
+        return result != -1;
+    }
+    public TenantBillDetails getTenantBillDetailsByBalanceId(int balanceId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query =
+                "SELECT " +
+                        "b.balanceId, b.userId, " +
+                        "p.fullName, ra.roomNum, " +
+                        "b.wifiBalance, b.monthlyRentBalance, b.electricBalance, " +
+                        "b.waterBalance, b.maintenanceFee, b.totalBalance, " +
+                        "b.balanceStatus, b.dueDate, b.verification, b.date, " +
+                        "pi.amount, pi.paymentMethod, pi.referenceNum, pi.paidDate " +
+                        "FROM balance b " +
+                        "LEFT JOIN personinfo p ON b.userId = p.userId " +
+                        "LEFT JOIN roomAssignment ra ON b.userId = ra.userId " +
+                        "LEFT JOIN paymentInfo pi ON b.balanceId = pi.balanceId " +
+                        "WHERE b.balanceId = ? " +
+                        "ORDER BY pi.paidDate DESC LIMIT 1";
+
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(balanceId)});
+
+        TenantBillDetails tb = null;
+
+        if (c.moveToFirst()) {
+
+            tb = new TenantBillDetails(
+                    c.getInt(c.getColumnIndexOrThrow("userId")),
+                    c.getInt(c.getColumnIndexOrThrow("balanceId")),
+                    c.getString(c.getColumnIndexOrThrow("fullName")),
+                    c.getString(c.getColumnIndexOrThrow("roomNum")),
+                    c.getDouble(c.getColumnIndexOrThrow("wifiBalance")),
+                    c.getDouble(c.getColumnIndexOrThrow("monthlyRentBalance")),
+                    c.getDouble(c.getColumnIndexOrThrow("electricBalance")),
+                    c.getDouble(c.getColumnIndexOrThrow("waterBalance")),
+                    c.getDouble(c.getColumnIndexOrThrow("maintenanceFee")),
+                    c.getDouble(c.getColumnIndexOrThrow("totalBalance")),
+                    c.getString(c.getColumnIndexOrThrow("paymentMethod")),
+                    c.getString(c.getColumnIndexOrThrow("balanceStatus")),
+                    c.getString(c.getColumnIndexOrThrow("dueDate")),
+                    c.getString(c.getColumnIndexOrThrow("verification")),
+                    c.getString(c.getColumnIndexOrThrow("paidDate")),
+                    c.getString(c.getColumnIndexOrThrow("date"))
+            );
+        }
+        c.close();
+        db.close();
+        return tb;
+    }
+    public boolean updateBalanceToPaid(int balanceId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("balanceStatus", "Paid");
+        values.put("verification", "Unverified");
+
+        int rows = db.update("balance", values, "balanceId = ?", new String[]{String.valueOf(balanceId)});
+        return rows > 0;
+    }
+
+    // Get the total sum of all pending balance for a specific user
+    public double getAccountPendingBalance(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double total = 0;
+
+        String query = "SELECT SUM(totalBalance) FROM balance WHERE userId = ? AND balanceStatus = 'Pending'";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+        return total;
+    }
+
+
+    // Get the total sum of all paid balance for a specific user
+    public double getAccountPiadBalance(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double total = 0;
+
+        String query = "SELECT SUM(totalBalance) FROM balance WHERE userId = ? AND balanceStatus = 'Paid'";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+        return total;
+    }
+
+    public ArrayList<Room> getAvailableRooms() {
+        ArrayList<Room> roomList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                ROOMS,              // table name
+                null,               // all columns
+                "roomStatus = ?",   // WHERE clause
+                new String[]{"Available"}, // WHERE arguments
+                null, null,
+                "roomNum ASC"       // order by (optional)
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int roomId = cursor.getInt(cursor.getColumnIndexOrThrow("roomId"));
+                String roomNum = cursor.getString(cursor.getColumnIndexOrThrow("roomNum"));
+                String roomType = cursor.getString(cursor.getColumnIndexOrThrow("roomType"));
+                String roomStatus = cursor.getString(cursor.getColumnIndexOrThrow("roomStatus"));
+                double roomPrice = cursor.getDouble(cursor.getColumnIndexOrThrow("roomPrice"));
+                int roomCapacity = cursor.getInt(cursor.getColumnIndexOrThrow("roomCapacity"));
+                String roomDescription = cursor.getString(cursor.getColumnIndexOrThrow("roomDescription"));
+                String imagePath = cursor.getString(cursor.getColumnIndexOrThrow("roomPicture"));
+
+                Uri roomImageUri = null;
+                if (imagePath != null) {
+                    roomImageUri = Uri.parse(imagePath); // convert string to Uri
+                }
+
+                // Create Room object and add to list
+                Room room = new Room(
+                        roomId,
+                        roomNum,
+                        roomType,
+                        roomStatus,
+                        roomPrice,
+                        roomCapacity,
+                        roomDescription,
+                        roomImageUri
+                );
+
+                roomList.add(room);
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        db.close();
+        return roomList;
+    }
+
+    public Balance getLatestBalance(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Balance balance = null;
+
+        String query = "SELECT * FROM " + BALANCE +
+                " WHERE userId = ? AND balanceStatus = 'Pending'" +
+                " ORDER BY balanceId DESC LIMIT 1";
+
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            balance = new Balance(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("userId")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("balanceId")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("wifiBalance")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("monthlyRentBalance")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("electricBalance")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("waterBalance")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("totalBalance")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("maintenanceFee")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("balanceStatus")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("dueDate")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("verification")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("date"))
+            );
+        }
+
+        cursor.close();
+        db.close();
+        return balance;
+    }
+    public List<Balance> getAllBalancesByUserId(int userId) {
+        List<Balance> balanceList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + BALANCE +
+                " WHERE userId = ?" +
+                " ORDER BY balanceId DESC";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Balance balance = new Balance(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("userId")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("balanceId")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("wifiBalance")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("monthlyRentBalance")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("electricBalance")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("waterBalance")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("totalBalance")),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow("maintenanceFee")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("balanceStatus")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("dueDate")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("verification")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("date"))
+                );
+                balanceList.add(balance);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return balanceList;
+    }
+
+    public String getFullNameByUserId(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String fullName = null;
+
+        String query = "SELECT fullName FROM " + PERSONINFO + " WHERE userId = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                fullName = cursor.getString(cursor.getColumnIndexOrThrow("fullName"));
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return fullName;
+    }
+
+    public double getTotalPendingBalance(int userId) {
+        double total = 0.0;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT SUM(totalBalance) FROM balance " +
+                "WHERE userId = ? AND balanceStatus = 'Pending'";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                total = cursor.getDouble(0);
+            }
+            cursor.close();
+        }
+
+        return total;
+    }
+
     public int loginUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         int userId = -1;
@@ -208,7 +795,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         double totalPending = 0;
 
-        String query = "SELECT SUM(totalBalance) FROM balance WHERE balanceStatus = 'Pending'";
+        String query = "SELECT SUM(totalBalance) FROM balance WHERE balanceStatus = 'Pending'  OR verification = 'Unverified'";
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -473,54 +1060,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<Transaction> getAllTransactions() {
-        ArrayList<Transaction> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.rawQuery("SELECT * FROM transactionTable", null);
-
-        if (c.moveToFirst()) {
-            do {
-                Transaction t = new Transaction(
-                        c.getInt(c.getColumnIndexOrThrow("transactionId")),
-                        c.getInt(c.getColumnIndexOrThrow("balanceId")),
-                        c.getInt(c.getColumnIndexOrThrow("userId")),
-                        c.getDouble(c.getColumnIndexOrThrow("amount")),
-                        c.getString(c.getColumnIndexOrThrow("date")),
-                        c.getString(c.getColumnIndexOrThrow("paymentMethod")),
-                        c.getString(c.getColumnIndexOrThrow("referenceNum"))
-                );
-                list.add(t);
-            } while (c.moveToNext());
-        }
-        c.close();
-        db.close();
-        return list;
-    }
-    public ArrayList<Audit> getAllAudits() {
-        ArrayList<Audit> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.rawQuery("SELECT * FROM audit", null);
-
-        if (c.moveToFirst()) {
-            do {
-                Audit a = new Audit(
-                        c.getInt(c.getColumnIndexOrThrow("auditId")),
-                        c.getInt(c.getColumnIndexOrThrow("transactionId")),
-                        c.getInt(c.getColumnIndexOrThrow("userId")),
-                        c.getString(c.getColumnIndexOrThrow("actionType")),
-                        c.getString(c.getColumnIndexOrThrow("timestamp")),
-                        c.getString(c.getColumnIndexOrThrow("details"))
-                );
-                list.add(a);
-            } while (c.moveToNext());
-        }
-        c.close();
-        return list;
-    }
-
-
     public Room getRoomById(int roomId){
         SQLiteDatabase db = getReadableDatabase();
         Room room = null;
@@ -550,28 +1089,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return room;
     }
-
-    public ArrayList<RoomAssignment> getAllAssignments(){
-        ArrayList<RoomAssignment> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor c = db.query(ROOMASSIGNMENT, null, null, null, null, null, "assignmentId DESC");
-
-        while(c.moveToNext()){
-            list.add(new RoomAssignment(
-                    c.getInt(c.getColumnIndexOrThrow("assignmentId")),
-                    c.getDouble(c.getColumnIndexOrThrow("totalBalance")),
-                    c.getInt(c.getColumnIndexOrThrow("userId")),
-                    c.getString(c.getColumnIndexOrThrow("roomNum"))
-            ));
-        }
-
-        c.close();
-        db.close();
-        return list;
-    }
-
-
 
     public int updateStatus(int id, String status) {
         SQLiteDatabase db = getWritableDatabase();

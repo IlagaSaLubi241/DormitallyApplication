@@ -296,7 +296,7 @@ public class RegisterForm extends AppCompatActivity implements View.OnClickListe
         RecyclerView roomListRV = dialog.findViewById(R.id.roomListRV);
 
         DBHelper db = new DBHelper(this);
-        List<Room> roomList = db.getAllRooms();
+        List<Room> roomList = db.getAvailableRooms();
 
         SelectRoomAdapter adapter = new SelectRoomAdapter(this, roomList, room -> {
             setSelectedRoom(room);

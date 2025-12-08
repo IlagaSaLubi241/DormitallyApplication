@@ -17,6 +17,7 @@ public class FindRoomItemHolder extends RecyclerView.ViewHolder {
     TextView PerMonth;
     TextView seeDetails;
 
+
     public FindRoomItemHolder(@NonNull View itemView) {
         super(itemView);
         roomImage = itemView.findViewById(R.id.imgRoom);

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- TITLE -->
+            <TextView
+                android:id="@+id/titleBillDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bill Details"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:paddingBottom="15dp" />
+
+            <!-- BILL INFO CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <!-- MONTH-YEAR -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Billing Period"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/txtBillPeriod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="January 2025"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp"/>
+
+                    <!-- DUE DATE -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Due Date"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/txtBillDueDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jan 15, 2025"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp"/>
+
+                    <!-- STATUS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/txtBillStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pending"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp"/>
+
+                    <!-- VERIFICATION -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verification"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/txtBillVerification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unverified"
+                        android:textColor="@color/black"
+                        android:paddingBottom="4dp"/>
+                    <!-- VERIFICATION -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Payment Method"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/txtModeOfPayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cash"
+                        android:textColor="@color/black"
+                        android:paddingBottom="4dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- BREAKDOWN CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bill Breakdown"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp" />
+
+                    <!-- MONTHLY RENT -->
+                    <TextView android:text="Monthly Rent" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/txtRent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₱0.00"
+                        android:textColor="@color/black"
+                        android:paddingBottom="6dp"/>
+
+                    <!-- ELECTRIC -->
+                    <TextView android:text="Electricity" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/txtElectric"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₱0.00"
+                        android:textColor="@color/black"
+                        android:paddingBottom="6dp"/>
+
+                    <!-- WATER -->
+                    <TextView android:text="Water" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/txtWater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₱0.00"
+                        android:textColor="@color/black"
+                        android:paddingBottom="6dp"/>
+
+                    <!-- WIFI -->
+                    <TextView android:text="WiFi" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/txtWifi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₱0.00"
+                        android:textColor="@color/black"
+                        android:paddingBottom="6dp"/>
+
+                    <!-- MAINTENANCE -->
+                    <TextView android:text="Maintenance Fee" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/txtMaintenance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₱0.00"
+                        android:textColor="@color/black"
+                        android:paddingBottom="10dp"/>
+
+                    <!-- TOTAL -->
+                    <TextView
+                        android:id="@+id/txtTotalAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Total: ₱0.00"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:paddingTop="8dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CLOSE BUTTON -->
+            <Button
+                android:id="@+id/btnClose"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:text="Close"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/toggle_selected"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

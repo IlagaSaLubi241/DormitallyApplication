@@ -231,7 +231,7 @@ public class CreateBill extends AppCompatActivity implements View.OnClickListene
             intent.putExtra("maintenance", maintenance);
             intent.putExtra("total", total);
             intent.putExtra("status", "Pending");
-            intent.putExtra("verification", "Not Verified");
+            intent.putExtra("verification", "Unverified");
             intent.putExtra("dueDate", dueDateStr);
             intent.putExtra("date", dateStr);
 

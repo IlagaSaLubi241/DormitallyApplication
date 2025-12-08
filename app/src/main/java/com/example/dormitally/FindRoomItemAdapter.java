@@ -85,6 +85,10 @@ public class FindRoomItemAdapter extends RecyclerView.Adapter<FindRoomItemHolder
         Button apply = view.findViewById(R.id.btnApply);
         ImageView back = view.findViewById(R.id.btnBack);
 
+        String roomStatus = status.getText().toString();
+        if(roomStatus.equalsIgnoreCase("Occupied")|| roomStatus.equalsIgnoreCase("Maintenance")){
+            apply.setVisibility(View.GONE);
+        }
         num.setText("Room Number: " + room.getRoomNum());
         type.setText("Type: " + room.getRoomType());
         status.setText("Status: " + room.getRoomStatus());

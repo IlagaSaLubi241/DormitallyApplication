@@ -17,6 +17,8 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
     List<TenantBillDetails> list;
     LayoutInflater inflater;
     OnItemActionListener listener;
+    int blncId;
+
 
     public AdminBillAdapter(Context context, List<TenantBillDetails> list, OnItemActionListener listener) {
         this.context = context;
@@ -36,6 +38,9 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
         TenantBillDetails tb = list.get(position);
         String status = tb.getBalanceStatus();          // Pending / Paid / Verified
         String verification = tb.getVerification();     // Not Verified / Verified
+        blncId = tb.getBalanceId();
+        DBHelper db = new DBHelper(context);
+        TenantBillDetails tb2 = db.getTenantBillDetailsByBalanceId(blncId);
 
         // Basic info
         holder.name.setText(tb.getFullName());
@@ -44,8 +49,8 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
         holder.amount.setText("₱" + tb.getTotalBalance());
         holder.paidStatus.setText(tb.getBalanceStatus());
         holder.verificationStatus.setText(tb.getVerification());
-        holder.paidDate.setText(tb.getPaidDate());
-        holder.methodPayment.setText(tb.getPaymentMethod());
+        holder.paidDate.setText(tb2.getPaidDate());
+        holder.methodPayment.setText(tb2.getPaymentMethod());
 
         // -------------------------------
         // RESET ALL VISIBILITY FIRST
@@ -62,7 +67,7 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
         // -------------------------------
 
         // 1️⃣ CASE: PENDING (not paid)
-        if (status.equalsIgnoreCase("Pending" ) && verification.equalsIgnoreCase("Not Verified")) {
+        if (status.equalsIgnoreCase("Pending" ) && verification.equalsIgnoreCase("Unverified")) {
             holder.paidStatus.setBackgroundResource(R.drawable.bg_maintenance);
             holder.paidStatus.setTextColor(Color.parseColor("#C8B104"));
             holder.btnViewDetails.setVisibility(View.VISIBLE);
@@ -76,7 +81,7 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
 
         // 2️⃣ CASE: PAID but NOT VERIFIED yet
         else if (status.equalsIgnoreCase("Paid") &&
-                verification.equalsIgnoreCase("Not Verified")) {
+                verification.equalsIgnoreCase("Unverified")) {
 
             holder.btnViewDetails.setVisibility(View.VISIBLE);
             holder.btnVerifyPayment.setVisibility(View.VISIBLE);  // verify button appears
@@ -85,6 +90,8 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
             // show payment details
             holder.paidDate.setVisibility(View.VISIBLE);
             holder.methodPayment.setVisibility(View.VISIBLE);
+
+
         }
 
         // 3️⃣ CASE: VERIFIED (completed)
@@ -96,7 +103,7 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
             holder.verificationStatus.setTextColor(Color.parseColor("#079732"));
 
             holder.btnViewDetails.setVisibility(View.VISIBLE);
-
+            holder.btnDelete.setVisibility(View.VISIBLE);
             // show payment info
             holder.paidDate.setVisibility(View.VISIBLE);
             holder.methodPayment.setVisibility(View.VISIBLE);
@@ -116,6 +123,10 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
         // ---------------------------------
         holder.btnEdit.setOnClickListener(v -> listener.onEdit(tb, position));
         holder.btnDelete.setOnClickListener(v -> listener.onDelete(tb, position));
+        holder.btnViewDetails.setOnClickListener(v -> listener.onView(blncId));
+        holder.btnVerifyPayment.setOnClickListener(v -> listener.onVerify(tb, position));
+
+
 
     }
 
@@ -127,6 +138,8 @@ public class AdminBillAdapter extends RecyclerView.Adapter<AdminBillHolder> {
     public interface OnItemActionListener {
         void onEdit(TenantBillDetails balance, int position);
         void onDelete(TenantBillDetails balance, int position);
-
+        void onView(int balanceId);
+        void onVerify(TenantBillDetails balance, int position);
     }
+
 }

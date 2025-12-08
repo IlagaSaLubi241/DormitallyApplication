@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <!-- Title + Date Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/txtIssueTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Air Conditioning Issue"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtIssueDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2025-11-26"
+                    android:textColor="#7A7A7A"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Sender -->
+            <TextView
+                android:id="@+id/txtIssueSender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From: Juan Dela Cruz"
+                android:textColor="#444444"
+                android:layout_marginTop="6dp"
+                android:textSize="14sp" />
+
+            <!-- Message -->
+            <TextView
+                android:id="@+id/txtIssueMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The AC in my room is not working properly. Can you send someone to check it?"
+                android:layout_marginTop="8dp"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Action Button -->
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

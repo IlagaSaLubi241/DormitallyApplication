@@ -47,6 +47,7 @@
                         android:id="@+id/totalBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="4dp"
                         android:text="₱5,000"
                         android:textColor="#000000"
@@ -60,6 +61,7 @@
                         android:id="@+id/btnPayNow"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/toggle_selected"
                         android:backgroundTint="#0057FF"
                         android:gravity="center"
@@ -95,6 +97,7 @@
                         android:textSize="19sp" />
 
                     <LinearLayout
+                        android:id="@+id/viewPaymentLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -129,6 +132,7 @@
 
                     <!-- Message Admin -->
                     <LinearLayout
+                        android:id="@+id/messageAdminLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/crtaccbackground"
@@ -144,6 +148,7 @@
                             app:tint="#0057FF" />
 
                         <TextView
+                            android:id="@+id/messageAdminLayout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
@@ -232,6 +237,7 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/statusTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

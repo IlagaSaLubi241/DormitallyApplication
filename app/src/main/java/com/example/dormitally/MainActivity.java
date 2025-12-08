@@ -17,6 +17,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.dormitally.tenantfragment.HomePage;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button tenantBtn, adminBtn, loginBtn;
@@ -96,27 +98,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (userId != -1) {
                     Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(MainActivity.this, TenantDashboard.class);
-                    intent.putExtra("userId", userId);
-                    startActivity(intent);
+                    Intent intnt = new Intent(this,TenantDashboard.class);
+                    intnt.putExtra("userId", userId);
+                    startActivity(intnt);
                 } else {
                     Toast.makeText(this, "Invalid tenant username or password!", Toast.LENGTH_SHORT).show();
                 }
 
             }
             // Admin login
-            else if (accountSelected.equals("admin")) {
-
-                int adminId = db.loginUser(username, password);
-
-                if (adminId != -1) {
-                    Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
-                    intent = new Intent(MainActivity.this, AdminDashboard.class);
-                    intent.putExtra("userId", adminId);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "Invalid admin username or password!", Toast.LENGTH_SHORT).show();
-                }
+            if (accountSelected.equals("admin")) {
+                Intent intent1 = new Intent(MainActivity.this, AdminDashboard.class);
+                intent1.putExtra("userId", 1);
+                startActivity(intent1);
+                Toast.makeText(this, "Admin Login Successful!", Toast.LENGTH_SHORT).show();
             }
         }
     }
